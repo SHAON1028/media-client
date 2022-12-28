@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import Spinner from '../../components/Spinner/Spinner';
 import { AuthContext } from '../../contexts/AuthProvider';
 
 const FirstSection = () => {
     const { user } = useContext(AuthContext)
+    const[loading,setLoading] = useState(false)
     const fullName = user?.displayName
     const name = fullName?.split(' ')[0]
     const [pic, setPic] = useState(null)
@@ -12,9 +14,11 @@ const FirstSection = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.target
+        setLoading(true)
         const post = form.post.value
         const photo = form.photo.files[0]
-
+        const totalLikes = 0
+        const totalComments = 0
         const formData = new FormData()
         formData.append('image', photo)
         const url = 'https://api.imgbb.com/1/upload?key=5a2bc614923a1c00357db44f6264027d'
@@ -26,7 +30,11 @@ const FirstSection = () => {
             .then((imgData) => {
                const postData = {
                 postOwner:user?.email,
-                post:post,
+                postOwnerName:user?.displayName,
+                postOwnerPhoto:user?.photoURL,
+                totalComments,
+                totalLikes,
+                postTesxt:post,
                 photo:imgData.data.display_url
 
                }
@@ -43,6 +51,7 @@ const FirstSection = () => {
                             console.log(result);
                            
                             toast.success('post added successfully');
+                            setLoading(false)
                             form.reset()
                            setPic('')
                         })
@@ -70,14 +79,14 @@ const FirstSection = () => {
             </div>
 
             <form onSubmit={handleSubmit}>
-                <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                <div className="w-full mb-4 border-0 rounded-lg  dark:bg-gray-700 dark:border-gray-600">
                     <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
 
                         <textarea id="comment" name='post' rows="4" className="w-full px-0 text-sm text-gray-900 bg-gray-600 border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400 pl-3" placeholder="Write a post..." required></textarea>
                     </div>
                     <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
                         <button type="submit" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-                            Post
+                           {loading ? <Spinner></Spinner> : 'Share'} 
                         </button>
                         <div className="flex pl-0 space-x-1 sm:pl-2 align-items justify-center">
 

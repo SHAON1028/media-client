@@ -4,18 +4,21 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 
 const Navbar = () => {
-    const {user} = useContext(AuthContext)
+    const {user,logout} = useContext(AuthContext)
    console.log(user?.displayName)
+   const handleLogout = ()=>{
+    logout()
+   }
     const menuItems = <>
      <li><a>Media</a></li>
         <li><a>Message</a></li>
      
         <li><a>About</a></li>
-        <div className="avatar online ml-4 ">
+    {user?.uid &&         <div className="avatar online ml-4 ">
   <div className="w-10 h-10 rounded-full">
     <img src={user?.photoURL} />
   </div>
-</div>
+</div>}
     </>
     return (
 
@@ -42,8 +45,8 @@ const Navbar = () => {
     <img src={user?.photoURL} />
   </div>
 </div>
-   {user?.uid ? <> <Link to="/login" className="btn"><span className='text-red-500'>Logout</span></Link></> :<>
-   <Link to="/login" className="btn "><span >Login</span></Link>
+   {user?.uid ? <> <Link to="/login" onClick={handleLogout} className="btn"><span className='text-red-500'>Logout</span></Link></> :<>
+   <Link to="/login"  className="btn "><span >Login</span></Link>
    </>}
   </div>
 </div>

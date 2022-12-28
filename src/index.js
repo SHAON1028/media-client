@@ -1,17 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import toast, { Toaster } from 'react-hot-toast';
-import AuthProvider from './contexts/AuthProvider';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import toast, { Toaster } from "react-hot-toast";
+import AuthProvider from "./contexts/AuthProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+const queryClient = new QueryClient();
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <AuthProvider>
-  <Toaster />
-  <App />
-</AuthProvider>
+  <QueryClientProvider client={queryClient}>
+    <AuthProvider>
+      <Toaster />
+      <App />
+    </AuthProvider>
+  </QueryClientProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
