@@ -1,7 +1,40 @@
 import React from 'react';
-
-const PostCard = ({post}) => {
-    const {postOwnerPhoto,postOwnerName,photo,postTesxt,totalComments,totalLikes} = post
+import { useState } from 'react';
+import { FcLike,FcLikePlaceholder } from 'react-icons/fc'
+import { AiOutlineLike,AiTwotoneLike } from 'react-icons/ai'
+const PostCard = ({post,refetch}) => {
+    
+    const {postOwnerPhoto,postOwnerName,photo,postTesxt,totalComments,totalLikes,_id} = post
+    const[liked,setLiked] = useState(false)
+ 
+    const handleLike = (like)=>{
+       
+        console.log(like)
+        const totalLikes = like + 1
+        const updateLike = {
+            totalLikes
+        }
+        const url = `http://localhost:5000/allposts/${_id}`
+        console.log(url)
+        fetch(url,{
+            method:'PUT',
+            headers:{
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(updateLike)
+        } )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+        
+        refetch()
+        setLiked(true)
+        refetch()
+    }
     return (
         <div>
             <div className="flex flex-col max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100">
@@ -19,14 +52,15 @@ const PostCard = ({post}) => {
                 </div>
                 <div className="flex flex-wrap justify-between">
                     <div className="space-x-2">
-                        <button aria-label="Share this post" type="button" className="p-2 text-center text-blue-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                                <path d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z" />
-                            </svg>
+{liked?          <button type="button" className="flex items-center p-1 space-x-1.5">
+                        <div className='text-blue-600 text-xl'>  <AiTwotoneLike/> </div> 
+                            <span className='text-blue-600 text-sm'>Liked</span>
+                        </button>       : <button onClick={()=>handleLike(totalLikes)} aria-label="Share this post" type="button" className="p-2 text-center cursor: pointer text-white text-xl">
+<AiTwotoneLike/>
 
 
 
-                        </button>
+                        </button>}
 
                     </div>
                     <div className="flex space-x-2 text-sm dark:text-gray-400">
@@ -38,10 +72,7 @@ const PostCard = ({post}) => {
                             <span>{totalComments}</span>
                         </button>
                         <button type="button" className="flex items-center p-1 space-x-1.5">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-label="Number of likes" className="w-4 h-4 fill-current dark:text-violet-400">
-                                <path d="M126.638,202.672H51.986a24.692,24.692,0,0,0-24.242,19.434,487.088,487.088,0,0,0-1.466,206.535l1.5,7.189a24.94,24.94,0,0,0,24.318,19.78h74.547a24.866,24.866,0,0,0,24.837-24.838V227.509A24.865,24.865,0,0,0,126.638,202.672ZM119.475,423.61H57.916l-.309-1.487a455.085,455.085,0,0,1,.158-187.451h61.71Z"></path>
-                                <path d="M494.459,277.284l-22.09-58.906a24.315,24.315,0,0,0-22.662-15.706H332V173.137l9.573-21.2A88.117,88.117,0,0,0,296.772,35.025a24.3,24.3,0,0,0-31.767,12.1L184.693,222.937V248h23.731L290.7,67.882a56.141,56.141,0,0,1,21.711,70.885l-10.991,24.341L300,169.692v48.98l16,16H444.3L464,287.2v9.272L396.012,415.962H271.07l-86.377-50.67v37.1L256.7,444.633a24.222,24.222,0,0,0,12.25,3.329h131.6a24.246,24.246,0,0,0,21.035-12.234L492.835,310.5A24.26,24.26,0,0,0,496,298.531V285.783A24.144,24.144,0,0,0,494.459,277.284Z"></path>
-                            </svg>
+                        <div className='text-blue-600 text-xl'>  <AiTwotoneLike/> </div> 
                             <span>{totalLikes}</span>
                         </button>
                     </div>

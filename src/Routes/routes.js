@@ -2,6 +2,7 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
 import Home from "../Pages/Home/Home";
+import Media from "../Pages/Home/Media/Media";
 import Login from "../Pages/Login/Login";
 import Signup from "../Pages/Login/Signup";
 import ErrorPage from "../Pages/Shared/ErrorPage";
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/media",
-        element: <Signup />,
+        element: <Media />,
       },
     ],
   },

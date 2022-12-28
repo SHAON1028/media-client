@@ -17,7 +17,7 @@ const SecondSection = () => {
     console.log(posts)
     return (
         <div>
-            {posts.map(post=><PostCard post={post} key={post._id}></PostCard>)}
+            {posts.map(post=><PostCard post={post} key={post._id} refetch={refetch}></PostCard>)}
         </div>
     );
 };

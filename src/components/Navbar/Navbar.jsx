@@ -10,7 +10,7 @@ const Navbar = () => {
     logout()
    }
     const menuItems = <>
-     <li><a>Media</a></li>
+     <li><Link to="/media">Media</Link></li>
         <li><a>Message</a></li>
      
         <li><a>About</a></li>
@@ -32,7 +32,7 @@ const Navbar = () => {
        {menuItems}
       </ul>
     </div>
-    <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+    <Link to="/" className="btn btn-ghost normal-case text-xl">daisyUI</Link>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
