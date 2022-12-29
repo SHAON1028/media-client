@@ -5,7 +5,7 @@ import { AiOutlineLike, AiTwotoneLike } from 'react-icons/ai'
 import { AuthContext } from '../../../contexts/AuthProvider';
 import { toast } from 'react-hot-toast';
 const PostCard = ({ post, refetch }) => {
-    const{user} = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     const { postOwnerPhoto, postOwnerName, photo, postTesxt, totalComments, totalLikes, _id } = post
     const [liked, setLiked] = useState(false)
 
@@ -38,33 +38,33 @@ const PostCard = ({ post, refetch }) => {
         refetch()
     }
 
-    const handleComment=(e)=>{
-        
+    const handleComment = (e) => {
+
         e.preventDefault();
         const form = e.target;
-        const comment=form.comment.value
+        const comment = form.comment.value
         console.log(comment)
-        const commentData ={
-            postId:_id,
-            commentOwner:user?.displayName,
-            commentOwnerPhoto:user?.photoURL,
-            comment:comment
+        const commentData = {
+            postId: _id,
+            commentOwner: user?.displayName,
+            commentOwnerPhoto: user?.photoURL,
+            comment: comment
         }
-        fetch('http://localhost:5000/allcomments',{
+        fetch('http://localhost:5000/allcomments', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(commentData)
 
         })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('Success:', data);
-          toast.success('added')
-          form.reset()
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Success:', data);
+                toast.success('added')
+                form.reset()
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
     return (
         <div className='m-10'>
@@ -94,7 +94,7 @@ const PostCard = ({ post, refetch }) => {
                         </button>}
 
                     </div>
-                   
+
                     <div className="flex space-x-2 text-sm dark:text-gray-400">
                         <button type="button" className="flex items-center p-1 space-x-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-label="Number of comments" className="w-4 h-4 fill-current dark:text-violet-400">
@@ -110,9 +110,9 @@ const PostCard = ({ post, refetch }) => {
                     </div>
                 </div>
                 <form onSubmit={handleComment}>
-                    <input type="text" name='comment' placeholder="Add a comment..." className="w-full py-0.5 dark:bg-transparent border-none rounded text-sm pl-0 dark:text-gray-100" />
-                    <button  className="btn btn-xs btn-outline btn-info">Add</button>
-                    </form>
+                    <input type="text" name='comment' placeholder="Add a comment..." className="w-full py-0.5 dark:bg-transparent border-none rounded text-sm pl-0 dark:text-gray-100" required/>
+                    <button className="btn btn-xs btn-outline btn-info">Add</button>
+                </form>
             </div>
         </div>
     );

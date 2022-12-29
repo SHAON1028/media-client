@@ -16,7 +16,7 @@ const SecondSection = () => {
     });
     console.log(posts)
     return (
-        <div>
+        <div className=''>
             {posts.map(post=><PostCard post={post} key={post._id} refetch={refetch}></PostCard>)}
         </div>
     );

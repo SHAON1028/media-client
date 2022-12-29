@@ -11,7 +11,7 @@ const Media = () => {
         }
     });
     return (
-        <div className='mx-auto w-2/5 mt-10'>
+        <div className='mx-auto lg:w-2/5 mt-10'>
             {allposts.map((post) =><MediaCard post={post} key={post._id} refetch={refetch}></MediaCard>)}
         </div>
     );
