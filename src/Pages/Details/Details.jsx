@@ -13,6 +13,7 @@ const Details = () => {
     const { user } = useContext(AuthContext)
     const { postOwnerPhoto, postOwnerName, photo, postTesxt, totalComments, totalLikes, _id } = postData[0]
     const comntData = useCmnt(_id)
+    
     const{ refetch,data:cmntData} = comntData
     const [liked, setLiked] = useState(false)
     const handleLike = (like) => {

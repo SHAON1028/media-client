@@ -11,12 +11,12 @@ const Navbar = () => {
    }
     const menuItems = <>
      <li><Link to="/media">Media</Link></li>
-        <li><a>Message</a></li>
+        <li><Link to="">Message</Link></li>
      
-        <li><a>About</a></li>
+        <li><Link to="/about">About</Link></li>
     {user?.uid &&         <div className="avatar online ml-4 ">
   <div className="w-10 h-10 rounded-full">
-    <img src={user?.photoURL} />
+    <img src={user?.photoURL} alt=""/>
   </div>
 </div>}
     </>
@@ -32,7 +32,7 @@ const Navbar = () => {
        {menuItems}
       </ul>
     </div>
-    <Link to="/" className="btn btn-ghost normal-case text-xl">daisyUI</Link>
+    <Link to="/" className="btn btn-ghost normal-case text-xl">SocialPedia</Link>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
@@ -42,7 +42,7 @@ const Navbar = () => {
   <div className="navbar-end">
   <div className="avatar online ml-4 lg:hidden">
   <div className="w-10 h-10 rounded-full">
-    <img src={user?.photoURL} />
+    <img src={user?.photoURL} alt="" />
   </div>
 </div>
    {user?.uid ? <> <Link to="/login" onClick={handleLogout} className="btn"><span className='text-red-500'>Logout</span></Link></> :<>

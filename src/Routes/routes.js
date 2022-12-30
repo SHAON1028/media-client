@@ -1,12 +1,14 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
+import About from "../Pages/About/About";
 import Details from "../Pages/Details/Details";
 import Home from "../Pages/Home/Home";
 import Media from "../Pages/Home/Media/Media";
 import Login from "../Pages/Login/Login";
 import Signup from "../Pages/Login/Signup";
 import ErrorPage from "../Pages/Shared/ErrorPage";
+import PrivateRoute from "./PrivateRoute";
 
 
 const router = createBrowserRouter([
@@ -17,7 +19,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element:<PrivateRoute> <Home /></PrivateRoute>,
       },
       {
         path: "/login",
@@ -29,12 +31,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/media",
-        element: <Media />,
+        element: <PrivateRoute><Media /></PrivateRoute>,
       },
       {
         path: "/details/:id",
-        element: <Details />,
+        element: <PrivateRoute><Details/></PrivateRoute>,
         loader:({ params }) => fetch(`http://localhost:5000/allposts/${params.id}`)
+      },
+      {
+        path: "/about",
+        element: <PrivateRoute><About /></PrivateRoute>,
+        
       },
     ],
   },
